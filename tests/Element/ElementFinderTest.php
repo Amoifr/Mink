@@ -191,6 +191,7 @@ class ElementFinderTest extends TestCase
         $this->expectException(\InvalidArgumentException::class);
         $this->expectExceptionMessage(sprintf('Unknown named selector mode "%s".', $namedMode));
 
+        // @phpstan-ignore argument.type (this test exercises the runtime guard, on values the narrowed type forbids)
         new ElementFinder($this->driver, $this->selectorsHandler, $this->manipulator, $namedMode);
     }
 

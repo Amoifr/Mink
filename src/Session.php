@@ -41,8 +41,7 @@ class Session
     private $selectorsHandler;
 
     /**
-     * @param NamedSelectorMode::* $namedMode How the "named" selector is resolved: one of the
-     *                                        NamedSelectorMode constants.
+     * @param NamedSelectorMode::* $namedMode How the "named" selector is resolved.
      */
     public function __construct(DriverInterface $driver, ?SelectorsHandler $selectorsHandler = null, string $namedMode = NamedSelectorMode::PARTIAL_FALLBACK)
     {

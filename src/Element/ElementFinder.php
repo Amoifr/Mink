@@ -34,13 +34,12 @@ class ElementFinder
      */
     private $xpathManipulator;
     /**
-     * @var string one of the NamedSelectorMode constants
+     * @var NamedSelectorMode::*
      */
     private $namedMode;
 
     /**
-     * @param string $namedMode How the "named" selector is resolved: one of the
-     *                          NamedSelectorMode constants.
+     * @param NamedSelectorMode::* $namedMode How the "named" selector is resolved.
      */
     public function __construct(DriverInterface $driver, SelectorsHandler $selectorsHandler, ?Manipulator $xpathManipulator = null, string $namedMode = NamedSelectorMode::PARTIAL_FALLBACK)
     {
