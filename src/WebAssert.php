@@ -33,13 +33,22 @@ class WebAssert
     protected $session;
 
     /**
+     * @var bool
+     */
+    private $compareQueryString;
+
+    /**
      * Initializes assertion engine.
      *
      * @param Session $session
+     * @param bool    $compareQueryString Whether the address assertions take the query string into
+     *                                    account. Off by default, so suites that have always compared
+     *                                    the path alone keep working.
      */
-    public function __construct(Session $session)
+    public function __construct(Session $session, bool $compareQueryString = false)
     {
         $this->session = $session;
+        $this->compareQueryString = $compareQueryString;
     }
 
     /**
@@ -863,7 +872,7 @@ class WebAssert
     protected function cleanUrl(string $url)
     {
         $parts = parse_url($url);
-        $query = empty($parts['query']) ? '' : '?'.$parts['query'];
+        $query = ($this->compareQueryString && !empty($parts['query'])) ? '?'.$parts['query'] : '';
         $fragment = empty($parts['fragment']) ? '' : '#'.$parts['fragment'];
         $path = empty($parts['path']) ? '/' : $parts['path'];
 

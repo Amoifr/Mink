@@ -46,31 +46,33 @@ class WebAssertTest extends TestCase
         ;
 
         $this->assertCorrectAssertion(function () {
-            $this->assert->addressEquals('/sub/url?param=true#webapp/nav');
+            $this->assert->addressEquals('/sub/url#webapp/nav');
         });
         $this->assertWrongAssertion(
             function () {
                 $this->assert->addressEquals('sub_url');
             },
             'Behat\\Mink\\Exception\\ExpectationException',
-            'Current page is "/sub/url?param=true#webapp/nav", but "sub_url" expected.'
+            'Current page is "/sub/url#webapp/nav", but "sub_url" expected.'
         );
     }
 
     public function testAddressEqualsWithQueryString()
     {
+        $assert = new WebAssert($this->session, true);
+
         $this->session
             ->expects($this->exactly(2))
             ->method('getCurrentUrl')
             ->will($this->returnValue('http://example.com/login?return_url=/user'))
         ;
 
-        $this->assertCorrectAssertion(function () {
-            $this->assert->addressEquals('/login?return_url=/user');
+        $this->assertCorrectAssertion(function () use ($assert) {
+            $assert->addressEquals('/login?return_url=/user');
         });
         $this->assertWrongAssertion(
-            function () {
-                $this->assert->addressEquals('/login');
+            function () use ($assert) {
+                $assert->addressEquals('/login');
             },
             'Behat\\Mink\\Exception\\ExpectationException',
             'Current page is "/login?return_url=/user", but "/login" expected.'
@@ -79,18 +81,20 @@ class WebAssertTest extends TestCase
 
     public function testAddressNotEqualsWithQueryString()
     {
+        $assert = new WebAssert($this->session, true);
+
         $this->session
             ->expects($this->exactly(2))
             ->method('getCurrentUrl')
             ->will($this->returnValue('http://example.com/login?return_url=/user'))
         ;
 
-        $this->assertCorrectAssertion(function () {
-            $this->assert->addressNotEquals('/login?return_url=/admin');
+        $this->assertCorrectAssertion(function () use ($assert) {
+            $assert->addressNotEquals('/login?return_url=/admin');
         });
         $this->assertWrongAssertion(
-            function () {
-                $this->assert->addressNotEquals('/login?return_url=/user');
+            function () use ($assert) {
+                $assert->addressNotEquals('/login?return_url=/user');
             },
             'Behat\\Mink\\Exception\\ExpectationException',
             'Current page is "/login?return_url=/user", but should not be.'
