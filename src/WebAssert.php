@@ -863,10 +863,11 @@ class WebAssert
     protected function cleanUrl(string $url)
     {
         $parts = parse_url($url);
+        $query = empty($parts['query']) ? '' : '?'.$parts['query'];
         $fragment = empty($parts['fragment']) ? '' : '#'.$parts['fragment'];
         $path = empty($parts['path']) ? '/' : $parts['path'];
 
-        return preg_replace('/^\/[^\.\/]+\.php\//', '/', $path).$fragment;
+        return preg_replace('/^\/[^\.\/]+\.php\//', '/', $path).$query.$fragment;
     }
 
     /**
