@@ -184,21 +184,21 @@ class ElementFinderTest extends TestCase
     }
 
     /**
-     * @dataProvider provideInvalidNamedModes
+     * @dataProvider provideInvalidNamedSelectorModes
      */
-    public function testUnknownNamedModeIsRejected(string $namedMode)
+    public function testUnknownNamedSelectorModeIsRejected(string $namedSelectorMode)
     {
         $this->expectException(\InvalidArgumentException::class);
-        $this->expectExceptionMessage(sprintf('Unknown named selector mode "%s".', $namedMode));
+        $this->expectExceptionMessage(sprintf('Unknown named selector mode "%s".', $namedSelectorMode));
 
         // @phpstan-ignore argument.type (this test exercises the runtime guard, on values the narrowed type forbids)
-        new ElementFinder($this->driver, $this->selectorsHandler, $this->manipulator, $namedMode);
+        new ElementFinder($this->driver, $this->selectorsHandler, $this->manipulator, $namedSelectorMode);
     }
 
     /**
      * @return array<string, array{string}>
      */
-    public static function provideInvalidNamedModes()
+    public static function provideInvalidNamedSelectorModes()
     {
         return array(
             'unknown value' => array('nope'),

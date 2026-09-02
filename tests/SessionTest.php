@@ -358,7 +358,7 @@ class SessionTest extends TestCase
         $this->session->maximizeWindow('test');
     }
 
-    public function testNamedModeIsForwardedToTheElementFinder()
+    public function testNamedSelectorModeIsForwardedToTheElementFinder()
     {
         $selectorsHandler = $this->createMock(SelectorsHandler::class);
         $selectorsHandler->expects($this->once())
@@ -376,7 +376,7 @@ class SessionTest extends TestCase
         $this->assertSame(array(), $session->getPage()->findAll('named', 'test'));
     }
 
-    public function testTheDefaultNamedModeStillFallsBackToPartial()
+    public function testTheDefaultNamedSelectorModeStillFallsBackToPartial()
     {
         $selectorsHandler = $this->createMock(SelectorsHandler::class);
         $selectorsHandler->expects($this->exactly(2))

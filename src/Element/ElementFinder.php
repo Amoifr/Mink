@@ -36,21 +36,21 @@ class ElementFinder
     /**
      * @var NamedSelectorMode::*
      */
-    private $namedMode;
+    private $namedSelectorMode;
 
     /**
-     * @param NamedSelectorMode::* $namedMode How the "named" selector is resolved.
+     * @param NamedSelectorMode::* $namedSelectorMode How the "named" selector is resolved.
      */
-    public function __construct(DriverInterface $driver, SelectorsHandler $selectorsHandler, ?Manipulator $xpathManipulator = null, string $namedMode = NamedSelectorMode::PARTIAL_FALLBACK)
+    public function __construct(DriverInterface $driver, SelectorsHandler $selectorsHandler, ?Manipulator $xpathManipulator = null, string $namedSelectorMode = NamedSelectorMode::PARTIAL_FALLBACK)
     {
-        if (NamedSelectorMode::PARTIAL_FALLBACK !== $namedMode && NamedSelectorMode::EXACT !== $namedMode) {
-            throw new \InvalidArgumentException(sprintf('Unknown named selector mode "%s".', $namedMode));
+        if (NamedSelectorMode::PARTIAL_FALLBACK !== $namedSelectorMode && NamedSelectorMode::EXACT !== $namedSelectorMode) {
+            throw new \InvalidArgumentException(sprintf('Unknown named selector mode "%s".', $namedSelectorMode));
         }
 
         $this->driver = $driver;
         $this->selectorsHandler = $selectorsHandler;
         $this->xpathManipulator = $xpathManipulator ?? new Manipulator();
-        $this->namedMode = $namedMode;
+        $this->namedSelectorMode = $namedSelectorMode;
     }
 
     /**
@@ -62,7 +62,7 @@ class ElementFinder
     {
         if ('named' === $selector) {
             $items = $this->findAll('named_exact', $locator, $parentXpath);
-            if (empty($items) && NamedSelectorMode::EXACT !== $this->namedMode) {
+            if (empty($items) && NamedSelectorMode::EXACT !== $this->namedSelectorMode) {
                 $items = $this->findAll('named_partial', $locator, $parentXpath);
             }
 
